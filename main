@@ -1,0 +1,70 @@
+#include <stdio.h>
+
+#define MAX_ALUNOS 50 // Define a capacidade máxima do array
+
+int main() {
+    // Declarações
+    float notas[MAX_ALUNOS];
+    int num_alunos = 0;
+    float soma_notas = 0.0;
+    float media_geral = 0.0;
+    char resposta;
+
+    printf("===========================================\n");
+    printf("     Calculadora de Média de Notas (Max %d)\n", MAX_ALUNOS);
+    printf("===========================================\n");
+
+    // 1. Coleta das Notas
+    
+    // Laço para ler as notas até o limite ou até o usuário decidir parar
+    for (int i = 0; i < MAX_ALUNOS; i++) {
+        printf("Digite a nota do aluno %d: ", i + 1);
+        
+        // Verifica se a leitura foi bem-sucedida
+        if (scanf("%f", &notas[i]) != 1) {
+            printf("\nErro na leitura. Encerrando a coleta de notas.\n");
+            break; // Sai do loop em caso de erro de entrada
+        }
+
+        num_alunos++; // Incrementa o contador de alunos que tiveram a nota registrada
+        
+        // Pergunta se deseja continuar (a partir do 1º aluno)
+        if (i < MAX_ALUNOS - 1) {
+            // Limpa o buffer de entrada (necessário após scanf para ler um char)
+            while ((getchar()) != '\n'); 
+            
+            printf("Deseja inserir a nota do próximo aluno? (S/N): ");
+            scanf(" %c", &resposta); 
+            
+            if (resposta == 'N' || resposta == 'n') {
+                break; // Sai do loop se a resposta for 'N'
+            }
+        }
+    }
+    
+    // Verifica se alguma nota foi registrada
+    if (num_alunos == 0) {
+        printf("\nNenhuma nota registrada. Não é possível calcular a média.\n");
+        return 0;
+    }
+
+    // 2. Cálculo da Média
+    
+    // Laço FOR para somar todas as notas no array
+    for (int i = 0; i < num_alunos; i++) {
+        soma_notas += notas[i];
+    }
+
+    // Calcula a média
+    media_geral = soma_notas / num_alunos;
+
+    // 3. Exibição dos Resultados
+    
+    printf("\n--- Resultados ---\n");
+    printf("Total de alunos processados: %d\n", num_alunos);
+    printf("Soma total das notas: %.2f\n", soma_notas);
+    printf("A **MÉDIA GERAL** das notas é: **%.2f**\n", media_geral);
+    printf("------------------\n");
+
+    return 0;
+}
